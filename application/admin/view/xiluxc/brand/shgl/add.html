@@ -1,0 +1,105 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('User_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-user_id" data-rule="required" data-source="user/user/index" data-field="nickname" class="form-control selectpage" name="row[user_id]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Merchant_name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-merchant_name" data-rule="required" class="form-control" name="row[merchant_name]" type="text">
+        </div>
+    </div>
+
+    <!-- 核心修改1：商户logo 改为图片上传 -->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Merchant_logo')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-merchant_logo" class="form-control" name="row[merchant_logo]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-merchant_logo" class="btn btn-danger plupload" data-input-id="c-merchant_logo" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-merchant_logo" class="btn btn-primary fachoose" data-input-id="c-merchant_logo" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+            </div>
+            <div class="img-preview-box">
+                <img id="preview-merchant_logo" class="img-preview" src="" style="max-height: 150px; max-width: 100%; display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- 核心修改2：营业执照 改为图片上传 -->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Business_license')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-business_license" class="form-control" name="row[business_license]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-business_license" class="btn btn-danger plupload" data-input-id="c-business_license" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-business_license" class="btn btn-primary fachoose" data-input-id="c-business_license" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+            </div>
+            <div class="img-preview-box">
+                <img id="preview-business_license" class="img-preview" src="" style="max-height: 150px; max-width: 100%; display: none;">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Contact_name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_name" class="form-control" name="row[contact_name]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Contact_phone')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_phone" class="form-control" name="row[contact_phone]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Audit_status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="radio">
+                {foreach name="auditStatusList" item="vo"}
+                <label for="row[audit_status]-{$key}"><input id="row[audit_status]-{$key}" name="row[audit_status]" type="radio" value="{$key}" {in name="key" value="0"}checked{/in} /> {$vo}</label>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Audit_remark')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-audit_remark" class="form-control " rows="5" name="row[audit_remark]" cols="50"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Audit_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-audit_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[audit_time]" type="text" value="{:date('Y-m-d H:i:s')}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="radio">
+                {foreach name="statusList" item="vo"}
+                <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="1"}checked{/in} /> {$vo}</label>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+        </div>
+    </div>
+</form>
+
+<!-- 必须引入的JS（如果页面已引入可忽略） -->
+<script src="/assets/js/plupload/plupload.full.min.js"></script>
+<script src="/assets/js/upload.js"></script>
+<script src="/assets/js/choose.js"></script>
