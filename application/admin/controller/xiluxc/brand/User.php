@@ -48,6 +48,7 @@ class User extends Backend
                 ->where($where)
                 ->order($sort, $order)
                 ->paginate($limit);
+//            dump($list);die();
             foreach ($list as $k => $v) {
                 $v->avatar = $v->avatar ? cdnurl($v->avatar, true) : letter_avatar($v->nickname);
                 $v->hidden(['password', 'salt']);

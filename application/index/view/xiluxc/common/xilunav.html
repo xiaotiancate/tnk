@@ -101,37 +101,37 @@
             </a>
         </li>
         {/if}
-        <!--{if $brand || $shop['type']==1}-->
-        <!--    <li class="{:in_array($config.controllername,['xiluxc.shop_service'])?'active':'treeview'}">-->
-        <!--        <a href="{:url('index/xiluxc.shop_service/index')}">-->
-        <!--            <i class="fa fa-server fa-fw"></i> <span>服务管理</span>-->
-        <!--        </a>-->
-        <!--    </li>-->
-        <!--{else /}-->
-        <!--    <li class="{:in_array($config.controllername,['xiluxc.branch_service'])?'active':'treeview'}">-->
-        <!--        <a href="{:url('index/xiluxc.branch_service/index')}">-->
-        <!--            <i class="fa fa-server fa-fw"></i> <span>分店服务</span>-->
-        <!--        </a>-->
-        <!--    </li>-->
-        <!--{/if}-->
-        <!--{if $brand || $shop['type']==1}-->
-        <!--<li class="{:in_array($config.controllername,['xiluxc.package'])?'active':'treeview'}">-->
-        <!--    <a href="{:url('index/xiluxc.package/index')}">-->
-        <!--        <i class="fa fa-gift fa-fw"></i> <span>套餐管理</span>-->
-        <!--    </a>-->
-        <!--</li>-->
-        <!--{else /}-->
-        <!--<li class="{:in_array($config.controllername,['xiluxc.branch_package'])?'active':'treeview'}">-->
-        <!--    <a href="{:url('index/xiluxc.branch_package/index')}">-->
-        <!--        <i class="fa fa-gift fa-fw"></i> <span>门店套餐</span>-->
-        <!--    </a>-->
-        <!--</li>-->
-        <!--{/if}-->
-        <!--<li class="{:in_array($config.controllername,['xiluxc.vip'])?'active':'treeview'}">-->
-        <!--    <a href="{:url('index/xiluxc.vip/index')}">-->
-        <!--        <i class="fa fa-credit-card-alt fa-fw"></i> <span>会员卡管理</span>-->
-        <!--    </a>-->
-        <!--</li>-->
+        {if $brand || $shop['type']==1}
+            <li class="{:in_array($config.controllername,['xiluxc.shop_service'])?'active':'treeview'}">
+                <a href="{:url('index/xiluxc.shop_service/index')}">
+                    <i class="fa fa-server fa-fw"></i> <span>服务管理</span>
+                </a>
+            </li>
+        {else /}
+            <li class="{:in_array($config.controllername,['xiluxc.branch_service'])?'active':'treeview'}">
+                <a href="{:url('index/xiluxc.branch_service/index')}">
+                    <i class="fa fa-server fa-fw"></i> <span>分店服务</span>
+                </a>
+            </li>
+        {/if}
+        {if $brand || $shop['type']==1}
+        <li class="{:in_array($config.controllername,['xiluxc.package'])?'active':'treeview'}">
+            <a href="{:url('index/xiluxc.package/index')}">
+                <i class="fa fa-gift fa-fw"></i> <span>套餐管理</span>
+            </a>
+        </li>
+        {else /}
+        <li class="{:in_array($config.controllername,['xiluxc.branch_package'])?'active':'treeview'}">
+            <a href="{:url('index/xiluxc.branch_package/index')}">
+                <i class="fa fa-gift fa-fw"></i> <span>门店套餐</span>
+            </a>
+        </li>
+        {/if}
+        <li class="{:in_array($config.controllername,['xiluxc.vip'])?'active':'treeview'}">
+            <a href="{:url('index/xiluxc.vip/index')}">
+                <i class="fa fa-credit-card-alt fa-fw"></i> <span>会员卡管理</span>
+            </a>
+        </li>
 
         <li class="{:in_array($config.controllername,['xiluxc.coupon'])?'active':'treeview'}">
             <a href="{:url('index/xiluxc.coupon/index')}">

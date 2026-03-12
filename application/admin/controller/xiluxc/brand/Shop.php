@@ -82,6 +82,7 @@ class Shop extends Backend
             ->where($where)
             ->order($sort, $order)
             ->paginate($limit);
+//        dump($list);die();
         $result = ['total' => $list->total(), 'rows' => $list->items()];
         return json($result);
     }

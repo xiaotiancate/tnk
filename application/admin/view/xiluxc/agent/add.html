@@ -1,0 +1,59 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('User_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-user_id" data-rule="required" data-source="user/user/index" data-field="id" class="form-control selectpage" name="row[user_id]" type="text" value="">
+        </div>
+    </div>
+
+    <!-- 替换后的省市区联动（核心：调用和参考代码相同的 area 接口） -->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('地区')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:Form::cxselect('xiluxc/ajax/area', ['province','city','district'],
+            ['province'=>0, 'city'=>0,'district'=>0])}
+        </div>
+    </div>
+
+    <!-- 详细地址 + 地图选择（和参考代码一致，绑定经纬度） -->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Address')}:</label>
+        <div class="col-xs-12 col-sm-6">
+            <input id="c-address" data-rule="required" class="form-control" name="row[address]" type="text" value="{$row.address|htmlentities}">
+        </div>
+        <div class="col-xs-12 col-sm-2">
+            <a class="btn btn-primary" data-input-id="c-address" data-lat-id="c-lat" data-lng-id="c-lng" data-toggle="addresspicker">地图选择</a>
+        </div>
+    </div>
+
+    <!-- 经纬度（保留你的字段，和地图选点绑定） -->
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('经纬度')}:</label>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-lat" data-rule="required" class="form-control" name="row[lat]" placeholder="纬度" type="text" value="{$row.lat|htmlentities}">
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <input id="c-lng" data-rule="required" class="form-control" name="row[lng]" placeholder="经度" type="text" value="{$row.lng|htmlentities}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Commission_rate')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-commission_rate" data-rule="required" class="form-control" step="0.01" name="row[commission_rate]" type="number" value="0.00">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-status" data-rule="required" class="form-control" name="row[status]" type="number" value="1">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+        </div>
+    </div>
+</form>

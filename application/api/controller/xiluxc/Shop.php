@@ -10,6 +10,8 @@ use app\common\model\xiluxc\brand\ShopBranchService;
 use app\common\model\xiluxc\brand\ShopService;
 use app\common\model\xiluxc\brand\Shopvip;
 use app\common\model\xiluxc\user\UserShopVip;
+use think\Collection;
+use think\Db;
 use function fast\array_get;
 
 /**
@@ -89,6 +91,7 @@ class Shop extends XiluxcApi
      */
     public function detail(){
         $params = $this->request->param('');
+
         $lat = array_get($params,'lat');
         $lng = array_get($params,'lng');
         if($lng && $lat){
@@ -97,16 +100,38 @@ class Shop extends XiluxcApi
             $field = "*";
         }
         $shopId = array_get($params,'shop_id');
+//        dump($params);die();
         $shop = new ShopModel();
+//        dump($shop);die();
         $shop = $shopId?$shop->field($field)->normal()->passed()->where('id',$shopId)->find():null;
+//        dump($shop);die();
         if(!$shop){
             $this->error("门店不存在或已下架");
         }
+//        dump(input());die();
         //服务与套餐
         $shop->append(['images_text','shop_tag']);
-        $shop->shop_services = $shop->shopServices();
+//        $shop->shop_services = $shop->shopServices();
+//       $a = (new Collection($shop->shop_services))->toArray();
+
+
+
+        $a = Db::name('xiluxc_shop_service')->where('shop_id',$shopId)->select();
+//        dump($a);die();
+        foreach ($a as &$v){
+//            dump(11);die();
+            $v['service'] = Db::name('xiluxc_service')->where('id',$v['service_id'])->find();
+           $v['shop_service'] = Db::name('xiluxc_shop_service')->where('shop_id',$v['shop_id'])->where('service_id',$v['service_id'])->find();
+           $v['shop_service']['image_text'] = 'http://tnk.com'.$v['shop_service']['image'];
+        }
+//
+        $shop->shop_services = $a;
+
+
+
         $shop->shop_package = $shop->shopPackage;
         $shop->distance = isset($shop->distance) ? ($shop->distance>=1000 ? bcdiv($shop->distance,1000,1).'km' : bcadd($shop->distance,0,1).'m') : '';
+
         //优惠券
         $userId = $this->auth->id;
         $shop->setAttr("coupons",Coupon::getCoupons($shop->id,$userId));
@@ -129,6 +154,7 @@ class Shop extends XiluxcApi
         $shopId = array_get($params,'shop_id');
         $shopBranchService = new ShopBranchService();
         $shopBranchService = $shopBranchService->normal()->where("shop_id",$shopId)->where("shop_service_id",$shopServiceId)->find();
+//        dump(input());die();
         if(!$shopBranchService){
             $this->error("服务不存在或已下架");
         }
@@ -139,6 +165,20 @@ class Shop extends XiluxcApi
         }
         $shopService->setAttr("is_vip",$this->auth->isLogin()?UserShopVip::shopDetailVip($this->auth->id,$shopId):['status'=>0]);
         $this->success('',$shopService);
+
+//
+//        $parmas = input();
+//        $shopService = Db::name('xiluxc_shop_service')->where('id',$parmas['id'])->where('shop_id',$parmas['shop_id'])->find();
+//        $shopService['service'] = Db::name('xiluxc_service')->where('id',$shopService['service_id'])->find();
+//        $shopService['image_text'] = 'http://tnk.com'.$shopService['image'];
+//        $shopService['service']['image_text'] = 'http://tnk.com'.$shopService['service']['image'];
+//        $shopService['service_price'] = Db::name('xiluxc_shop_service_price')->where('shop_service_id',$shopService['id'])->where('shop_id',$parmas['shop_id'])
+//            ->where('service_id',$shopService['service_id'])->select();
+//        $a = new ShopService();
+//       $b = $a->setAttr("is_vip",$this->auth->isLogin()?UserShopVip::shopDetailVip($this->auth->id,$parmas['shop_id']):['status'=>0]);
+//       $shopService['is_vip'] = $b['is_vip'];
+//        $this->success('',$shopService);
+//        dump($parmas);die();
     }
 
     /**

@@ -46,6 +46,19 @@
     </div>
 
     <div class="form-group">
+        <label for="c-goodscate" class="control-label col-xs-12 col-sm-2">{:__('商品归属')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[goodscate]', [ 0=> __('商城商品'), 1 => __('商户商品')], $row['goodscate'])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-process" class="control-label col-xs-12 col-sm-2">{:__('审核')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[process]', [ 0=> __('未审核'), 1 => __('审核通过')], $row['process'])}
+        </div>
+    </div>
+
+    <div class="form-group">
         <label for="c-thumb" class="control-label col-xs-12 col-sm-2">{:__('Thumb')}:</label>
         <div class="col-xs-12 col-sm-8">
             <div class="input-group">
@@ -86,6 +99,13 @@
             <span class="text-danger">提示：-1为不限</span>
         </div>
     </div>
+<!--    <div class="form-group">-->
+<!--        <label for="c-weigh" class="control-label col-xs-12 col-sm-2">{:__('商品归属')}:</label>-->
+<!--        <div class="col-xs-12 col-sm-8">-->
+<!--            <input id="goodscate" class="form-control" min="0" name="row[goodscate]" type="number" min="0" value="{$row.goodscate}">-->
+<!--            <span class="text-danger">提示：0为商城商品，1为多商户商品</span>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="form-group">
         <label for="c-stock" class="control-label col-xs-12 col-sm-2">{:__('Stock')}:</label>
         <div class="col-xs-12 col-sm-8">
@@ -122,6 +142,12 @@
             <input id="c-usenum" class="form-control" min="0" name="row[usenum]" type="number" value="{$row.usenum}">
         </div>
     </div>
+<!--    <div class="form-group">-->
+<!--        <label for="c-usenum" class="control-label col-xs-12 col-sm-2">{:__('审核')}:</label>-->
+<!--        <div class="col-xs-12 col-sm-8">-->
+<!--            <input id="c-process" class="form-control" min="0" name="row[process]" type="number" value="{$row.process}">-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="form-group">
         <label for="c-flag" class="control-label col-xs-12 col-sm-2">{:__('Flag')}:</label>
         <div class="col-xs-12 col-sm-8">

@@ -29,13 +29,13 @@ class Goods extends Api
     {
         $pernum = 20;
         $pagenum = input('get.pagenum/d');
-        $list = Db::name('leescore_goods')->field('*, CONCAT("http://tnk.com/", thumb) as thumb_url')->page($pagenum, $pernum)->select();
+        $list = Db::name('leescore_goods')->field('*, CONCAT("https://cheq.damaii.cn/", thumb) as thumb_url')->page($pagenum, $pernum)->select();
 
         $this->success('请求成功',$list);
     }
     public function deail(){
         $id = $this->request->post("id");
-        $detail=Db::name('leescore_goods')->where('id',$id)->field('*, CONCAT("http://tnk.com/", thumb) as thumb_url')->find();
+        $detail=Db::name('leescore_goods')->where('id',$id)->field('*, CONCAT("https://cheq.damaii.cn/", thumb) as thumb_url')->find();
         $detail['thumb_urls'][0]=$detail['thumb_url'];
 //        dump($detail);die();
         $this->success('请求成功',$detail);
@@ -77,7 +77,7 @@ class Goods extends Api
         $query = Db::name('leescore_order o')
             ->field('o.*, 
                     g.goods_name,  
-                    CONCAT("http://tnk.com/", g.goods_thumb) as goods_thumb, 
+                    CONCAT("https://cheq.damaii.cn/", g.goods_thumb) as goods_thumb, 
                     g.goods_id,
                     g.score,
                     g.money,
@@ -258,7 +258,12 @@ class Goods extends Api
         $data['uid']=$user['id'];
         $data['createtime']=time();
         $data['number']=1;
-        $res=Db::name('leescore_cart')->insert($data);
+        $cate = Db::name('leescore_cart')->where('uid',$user['id'])->find();
+        if ($cate){
+           $res = Db::name('leescore_cart')->where('uid',$user['id'])->update(['goods_id'=>$id]);
+        }else{
+            $res=Db::name('leescore_cart')->insert($data);
+        }
         if($res){
             $this->success('添加成功');
         }else {
@@ -273,7 +278,7 @@ class Goods extends Api
         $ordermorey=0;
         foreach ($cartItems as $key=> $item) {
             $goods = Db::name('leescore_goods')->where('id', $item['goods_id'])->find();
-            $goods['thumb']='http://tnk.com/'.$goods['thumb'];
+            $goods['thumb']='https://cheq.damaii.cn/'.$goods['thumb'];
             $cartItems[$key]['goods']=$goods;
             $totalScore += $goods['scoreprice'] * $item['number'];
             $ordermorey += $goods['money'] * $item['number'];
@@ -293,8 +298,10 @@ class Goods extends Api
     }
     
     public function ordercera(){
-        
-        $time = time();
+
+//        $data = input();
+//        dump($data);die();
+//        $time = time();
         // var_dump(1);die;
         $add_config = get_addon_config('leescore');
         
@@ -305,6 +312,7 @@ class Goods extends Api
         $addres_id= $this->request->post('addres_id');
         
         $addres=Db::name('leescore_address')->where('id',$addres_id)->find();
+//        dump($addres);die();
         $user = $this->auth->getUser();
         $account = UserAccount::where('user_id', $this->auth->id)->find();
         
@@ -333,7 +341,9 @@ class Goods extends Api
         $data['score_total'] = $totalAmount;
         //需支付总款
         $data['money_total'] = $ordermorey;
-    
+       $carts =  Db::name('leescore_cart')->where('uid', $this->auth->id)->find();
+        $goods = Db::name('leescore_goods')->where('id',$carts['goods_id'])->find();
+        $data['goodsdad'] = $goods['goodsdad'];
         Db::name('leescore_order')->insert($data);
         $lastid = Db::name('leescore_order')->getLastInsID();
         //添加收货地址 fa_leescore_order_address
@@ -462,7 +472,7 @@ class Goods extends Api
         $orders = Db::name('leescore_order o')
         ->field('o.*, 
             g.goods_name,  
-            CONCAT("http://tnk.com/", g.goods_thumb) as goods_thumb, 
+            CONCAT("https://cheq.damaii.cn/", g.goods_thumb) as goods_thumb, 
             g.goods_id,
             g.score,
             g.money,

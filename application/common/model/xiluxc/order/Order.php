@@ -172,6 +172,7 @@ class Order extends Model
             $shopServiceId = array_get($params,'service_id');
             $shopBranchService = new ShopBranchService();
             $shopBranchService = $shopBranchService->normal()->where("shop_id",$shopId)->where("shop_service_id",$shopServiceId)->find();
+//            dump($shopBranchService);die();
             if(!$shopBranchService){
                 throw new Exception("服务不存在或已下架");
             }

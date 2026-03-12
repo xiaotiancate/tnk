@@ -37,6 +37,7 @@ class Coupon extends XiluxcFront
         $this->view->assign("rangeTypeList", $this->model->getRangeTypeList());
         $this->view->assign("rangeStatusList", $this->model->getRangeStatusList());
         $this->view->assign("statusList", $this->model->getStatusList());
+
     }
 
 

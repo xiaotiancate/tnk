@@ -24,8 +24,11 @@ class Order extends XiluxcApi
      * 下单信息查询
      */
     public function pre_order(){
+//        dump(111);die();
         $params = $this->request->post('');
+//        dump($params);die();
         try {
+
             $row = OrderModel::preOrder($params,$this->auth->id);
         }catch (Exception $e){
             $this->error($e->getMessage());

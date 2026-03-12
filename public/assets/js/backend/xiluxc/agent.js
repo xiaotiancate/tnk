@@ -5,13 +5,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'xiluxc/brand/shgl/index' + location.search,
-                    add_url: 'xiluxc/brand/shgl/add',
-                    edit_url: 'xiluxc/brand/shgl/edit',
-                    del_url: 'xiluxc/brand/shgl/del',
-                    multi_url: 'xiluxc/brand/shgl/multi',
-                    import_url: 'xiluxc/brand/shgl/import',
-                    table: 'merchant',
+                    index_url: 'xiluxc/agent/index' + location.search,
+                    add_url: 'xiluxc/agent/add',
+                    edit_url: 'xiluxc/agent/edit',
+                    del_url: 'xiluxc/agent/del',
+                    multi_url: 'xiluxc/agent/multi',
+                    import_url: 'xiluxc/agent/import',
+                    table: 'xiluxc_agent',
                 }
             });
 
@@ -29,17 +29,16 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id')},
                         {field: 'user_id', title: __('User_id')},
-                        {field: 'merchant_name', title: __('Merchant_name'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
-                        {field: 'merchant_logo', title: __('Merchant_logo'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.image},
-                        {field: 'contact_name', title: __('Contact_name'), operate: 'LIKE'},
-                        {field: 'commission', title: __('可提现'), operate: 'LIKE'},
-                        {field: 'contact_phone', title: __('Contact_phone'), operate: 'LIKE'},
-                        {field: 'business_license', title: __('Business_license'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.image},
-                        {field: 'audit_status', title: __('Audit_status'), searchList: {"0":__('Audit_status 0'),"1":__('Audit_status 1'),"2":__('Audit_status 2')}, formatter: Table.api.formatter.status},
-                        {field: 'audit_time', title: __('Audit_time'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
+                        {field: 'province_name', title: __('省份')},
+                        {field: 'city_name', title: __('城市')},
+                        {field: 'district_name', title: __('地区')},
+                        {field: 'address', title: __('Address'), operate: 'LIKE', table: table, class: 'autocontent', formatter: Table.api.formatter.content},
+                        {field: 'lng', title: __('Lng'), operate:'BETWEEN'},
+                        {field: 'lat', title: __('Lat'), operate:'BETWEEN'},
+                        {field: 'commission_rate', title: __('Commission_rate'), operate:'BETWEEN'},
+                        {field: 'status', title: __('Status')},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
                         {field: 'updatetime', title: __('Updatetime'), operate:'RANGE', addclass:'datetimerange', autocomplete:false, formatter: Table.api.formatter.datetime},
-                        {field: 'status', title: __('Status'), searchList: {"0":__('Status 0'),"1":__('Status 1')}, formatter: Table.api.formatter.status},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
                     ]
                 ]

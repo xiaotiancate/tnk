@@ -32,10 +32,11 @@ class Leescoregoods extends Backend
         $tree = Tree::instance()->init($cate, 'category_id');
         $this->categorylist = $tree->getTreeList($tree->getTreeArray(0), 'name');
         $categorydata = [];
+//        dump($this->categorylist);die();
         foreach ($this->categorylist as $k => $v) {
             $categorydata[$v['id']] = $v;
         }
-        dump($categorydata);die();
+//        dump($categorydata);die();
 
         $this->assignconfig('options_val', $categorydata);
 
@@ -87,6 +88,7 @@ class Leescoregoods extends Backend
                 ->select();
 
             $result = array("total" => $total, "rows" => $list);
+//            dump($result);die();
             return json($result);
         }
 
