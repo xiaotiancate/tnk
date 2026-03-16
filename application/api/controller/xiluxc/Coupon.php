@@ -64,7 +64,7 @@ class Coupon extends XiluxcApi
     public function kt(){
         // var_dump(1);die;
         $id = $this->request->post('id');
-            // var_dump($id);die;
+//             var_dump($id);die;
         $userId = $this->auth->id;
          //fa_xiluxc_shop_vip
         $vip = Db::name('xiluxc_shop_vip')->where('id',$id)->find();

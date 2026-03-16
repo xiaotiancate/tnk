@@ -18,6 +18,7 @@ use app\common\model\xiluxc\user\UserPackage;
 use app\common\model\xiluxc\user\UserPackageService;
 use app\common\model\xiluxc\user\UserShopAccount;
 use app\common\model\xiluxc\user\UserShopVip;
+use think\Collection;
 use think\Db;
 use think\Exception;
 use think\exception\PDOException;
@@ -250,7 +251,10 @@ class Order extends Model
             if($use_points_status = array_get($params,'use_points_status')){
                 $payPrice = bcsub($payPrice,$points_fee,2);
             }
+
             $userShopAccount = UserShopAccount::addAccount($userId,$shopBranchService['shop_id']);
+
+//            dump($userAc);die();
             return [
                 'coupon'        =>  $useCoupon,
                 'data'          =>  $shopService,
@@ -378,7 +382,10 @@ class Order extends Model
             $ext = array_intersect_key($params, array_flip((array)  ['appoint_date', 'service_id', 'service_price_id', 'shop_id', 'type'
             ]));
         }
+        $us = Db::name('user')->where('id',$userId)->find();
+        $vip = Db::name('xiluxc_shop_vip')->where('id',$us['level'])->find();
         Db::startTrans();
+//        dump(number_format($sure['pay_price'] * $vip['perpetual_discount'] / 10,2));die();
         try {
             #1.创建订单
             $order = self::create([
@@ -387,7 +394,7 @@ class Order extends Model
                 'user_id'       =>  $userId,
                 'order_amount'  =>  $sure['total_price'],
                 'appoint_date'  =>  $appoint_date ? strtotime($appoint_date) : null,
-                'pay_fee'       =>  $sure['pay_price'],
+                'pay_fee'       =>  number_format($sure['pay_price'] * $vip['perpetual_discount'] / 10,2),
                 'shop_fee'      =>  $sure['shop_price'],
                 'points'        =>  $use_points_status?$sure['points']:0,
                 'points_fee'    =>  $use_points_status?$sure['points_fee']:0,
@@ -402,7 +409,7 @@ class Order extends Model
                 'ext'           =>   $ext ? json_encode(['service'=>$ext]) : "",
                 'user_package_id'=>  $sure['data']['user_package']['id'] ?? 0
             ]);
-
+//dump((new Collection($order))->toArray());die();
             #2.添加服务/套餐
             if($order['type'] == 'service'){
                 $item = [
@@ -647,6 +654,7 @@ class Order extends Model
      * 支付成功
      */
     public static function payNotify($order_no,$trade_no){
+
         $order = self::where('order_trade_no',$order_no)->find();
         if(!$order){
             throw new Exception("订单不存在");
@@ -657,6 +665,7 @@ class Order extends Model
         $order->trade_no = $trade_no;
         $order->status = 'paid';
         $order->paid_time = time();
+
         $order->save();
         #优惠券变成已使用
         $orderCoupon = OrderCoupon::where("order_id",$order->id)->find();
@@ -690,16 +699,20 @@ class Order extends Model
             ];
             Hook::listen("xiluxc_add_score",$params);
         }
+//        dump($order['type']);die();
+//        dump(2222);die();
         if($order['type'] == 'package'){
             Hook::listen("xiluxc_package_buy_message",$order);
         }else{
             Hook::listen("xiluxc_service_buy_message",$order);
         }
+//
         //添加门店会员
         $data = ['order'=>$order];
         Hook::listen('xiluxc_shop_user',$data);
         //创建服务并支抵扣服务
         $ext = $order['ext'] ? json_decode($order['ext'],true) : [];
+//        dump($order['type']);die();
         if($order['type'] == 'package' && !empty($ext['service'])){
             self::addPackageService($order,$ext['service']);
         }
@@ -707,7 +720,7 @@ class Order extends Model
     }
 
     /**
-     * 创建服务订单并抵扣
+     * 创建服务订并单抵扣
      * @param $order
      */
     private static function addPackageService($order,$service){
@@ -741,6 +754,7 @@ class Order extends Model
         if($total_count == $count){
             $userPackage->allowField(['status'=>'finished']);
         }
+
         self::payNotify($orderinfo->order_trade_no,'package');
         return true;
     }

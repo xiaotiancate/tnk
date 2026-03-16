@@ -12,6 +12,7 @@ use app\common\model\xiluxc\order\Order AS OrderModel;
 use app\common\model\xiluxc\order\OrderLog;
 use app\common\model\xiluxc\order\OrderQrcode;
 use app\common\model\xiluxc\user\UserPackageService;
+use think\Collection;
 use think\Db;
 use think\Exception;
 use think\exception\PDOException;
@@ -26,10 +27,21 @@ class Order extends XiluxcApi
     public function pre_order(){
 //        dump(111);die();
         $params = $this->request->post('');
-//        dump($params);die();
+//        dump($this->auth);die();
         try {
 
             $row = OrderModel::preOrder($params,$this->auth->id);
+//            dump($row);die();
+         $vip  =  Db::name('xiluxc_shop_vip')->where('id',$this->auth->level)->find();
+      if ($vip){
+          $price  = number_format($vip['perpetual_discount'] / 10 * $row['pay_price'], 2);
+          $row['discount_price'] = number_format($row['pay_price'] - $price,2);
+          $row['pay_price'] = $price;
+          $row['levelname'] = $vip['name'];
+       }
+
+//            $row[''] =1;
+//            dump((new Collection($row))->toArray());die();
         }catch (Exception $e){
             $this->error($e->getMessage());
         }
@@ -41,6 +53,7 @@ class Order extends XiluxcApi
      */
     public function create_order(){
         $params = $this->request->post('');
+
         $user = $this->auth->getUser();
         if($user->status != 'normal') {
             throw new Exception('账户已被禁用');
@@ -212,12 +225,14 @@ class Order extends XiluxcApi
      * @param null $ids
      */
     public function aftersale(){
+        $this->error('暂时不能退款');
         $id = $this->request->post('id');
         $order = new OrderModel();
 
         $row = $order->where("id",$id)
             ->where("user_id",$this->auth->id)
             ->find();
+//        dump($row);die();
         if (!$row) {
             $this->error(__('No Results were found'));
         }

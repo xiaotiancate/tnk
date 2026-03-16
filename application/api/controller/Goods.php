@@ -40,10 +40,10 @@ class Goods extends Api
 //        dump($detail);die();
         $this->success('请求成功',$detail);
     }
-    
+
     public function orderlist(){
         // var_dump(1);die;
-        
+
         $state = input('post.state');
         $where=[];
         $where['o.uid']= $this->auth->id;
@@ -69,11 +69,11 @@ class Goods extends Api
             3 => '已完成'
         ];
         // var_dump($where);die;
-        
+
         $page = input('page/d', 1);
-        
+
         $pageSize = input('page_size/d', 15);
-        
+
         $query = Db::name('leescore_order o')
             ->field('o.*, 
                     g.goods_name,  
@@ -87,13 +87,13 @@ class Goods extends Api
             ->join('leescore_order_goods g', 'o.id = g.order_id','left')
             ->join('leescore_order_address a', 'o.id = a.order_id','left')
             ->where($where);
-        
+
         // 获取分页数据
         $orders = $query->page($page, $pageSize)->select();
         // var_dump($orders);die;
         // 获取总数（用于分页显示）
         $total = $query->removeOption('page')->count();
-        
+
         foreach ($orders as &$order) {
             $order['status_text'] = $statusMap[$order['status']] ?? '未知状态';
         }
@@ -103,9 +103,9 @@ class Goods extends Api
         $data['total']=$total;
         $data['total_page']=ceil($total / $pageSize);
         $this->success('数据',$data);
-        
+
     }
-    
+
        //创建订单
     public function createOrderOne()
     {
@@ -187,7 +187,7 @@ class Goods extends Api
 
         $this->redirect(addon_url('leescore/order/postOrders', ['orderid' => $lastid]));
     }
-    
+
     public function isCheck($id, $number)
     {
         //积分验证
@@ -235,14 +235,14 @@ class Goods extends Api
         $result = ['code' => true, 'msg' => "Success"];
         return $result;
     }
-    
+
     //收货地址
     public function order_address(){
         $user = $this->auth->getUser();
         $adddres=Db::name('leescore_address')->where('uid',$user['id'])->select();
         $this->success('请求成功',$detail);
     }
-    
+
     public function buy(){
         $id = $this->request->post('id');
         $user = $this->auth->getUser();
@@ -252,7 +252,7 @@ class Goods extends Api
         $adddres=Db::name('leescore_address')->where('uid',$user['id'])->select();
         if(!$adddres){
              $this->success('2');
-        } 
+        }
         // var_dump($user);die;
         $data['goods_id']=$id;
         $data['uid']=$user['id'];
@@ -287,35 +287,35 @@ class Goods extends Api
         $data['goods']=$cartItems;
         $data['addres']=$addres;
         //计算合计金额
-        
+
         // 获取购物车所有商品
         // $cartItems = Db::name('leescore_cart')->where('uid',$user['id'])->select();
-       
+
 
         $data['score']=$totalScore;
 
         $this->success('数据列表',$data);
     }
-    
+
     public function ordercera(){
 
 //        $data = input();
 //        dump($data);die();
-//        $time = time();
+        $time = time();
         // var_dump(1);die;
         $add_config = get_addon_config('leescore');
-        
-        
+
+
         $totalAmount= $this->request->post('totalAmount');
-        
-        
+
+
         $addres_id= $this->request->post('addres_id');
-        
+
         $addres=Db::name('leescore_address')->where('id',$addres_id)->find();
 //        dump($addres);die();
         $user = $this->auth->getUser();
         $account = UserAccount::where('user_id', $this->auth->id)->find();
-        
+
         // var_dump($user['money']);die;
         $ordermorey= $this->request->post('ordermorey');
            //用户编号
@@ -342,6 +342,7 @@ class Goods extends Api
         //需支付总款
         $data['money_total'] = $ordermorey;
        $carts =  Db::name('leescore_cart')->where('uid', $this->auth->id)->find();
+//       dump($carts);die();
         $goods = Db::name('leescore_goods')->where('id',$carts['goods_id'])->find();
         $data['goodsdad'] = $goods['goodsdad'];
         Db::name('leescore_order')->insert($data);
@@ -389,7 +390,7 @@ class Goods extends Api
         if($account['points'] < $totalAmount){
             $this->error('积分不足!');
         }
-        
+
         Db::startTrans();
         try{
             $res = Db::name('xiluxc_user_account')
@@ -405,7 +406,7 @@ class Goods extends Api
                     'trade_score' => $totalAmount,
                     'trade_money' => $ordermorey
                 ]);
-                
+
                 if ($ordermorey > 0) {
                         Db::name('user')->where('id', $this->auth->id)->setInc('monery', $ordermorey);
                         $money_log = [
@@ -416,11 +417,11 @@ class Goods extends Api
                             'after'        => bcsub($account['money'], $ordermorey, 2),
                             'memo'         => '兑换积分商品',
                         ];
-                        
+
                         // $datas['order_id']=$order_id;
                         Db::name('user_money_log')->insert($money_log);
                     }
-                    
+
                     if ($totalAmount > 0) {
                         $score_log = [
                             'score'        => -$totalAmount,
@@ -433,15 +434,15 @@ class Goods extends Api
                         Db::name('user_score_log')->insert($score_log);
                     }
             }
-            
-             Db::commit();    
+
+             Db::commit();
         } catch (\Exception $e) {
             Db::rollback();
             $this->error($e->getMessage());
         }
         $this->success('支付成功');
     }
-    
+
     public function scorelog($type,$money,$bianmonery,$user_id,$note,$order_id){
         $data['type']=$type;//1:积分  2：余额
         $data['money']=$money;
@@ -454,7 +455,7 @@ class Goods extends Api
 
         return 1;
     }
-    
+
     public function orderstatus(){
         $order_id= $this->request->post('order_id');
         $data['status']=3;
@@ -465,7 +466,7 @@ class Goods extends Api
             $this->error('操作失败');
         }
     }
-    
+
     public function orderinfo(){
         $order_id= $this->request->post('order_id');
         $where['o.id']=$order_id;

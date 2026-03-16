@@ -329,7 +329,7 @@ class User extends XiluxcApi
         
          $user = $this->auth->getUser()->hidden(['group_id','password','salt','level','bio','token','loginip','joinip','score','jointime','successions','maxsuccessions','prevtime']);
          
-        $account = UserAccount::where('user_id',$user->id)->field('total_money,money,withdraw_money,(user_message+system_message) as total_message,points')->find();
+        $account = UserAccount::where('user_id',$user->id)->field('lj,total_money,money,withdraw_money,(user_message+system_message) as total_message,points')->find();
         #积分
         $user->points = $account['points'];
         $user->account = $account;
@@ -352,6 +352,8 @@ class User extends XiluxcApi
         $user->user_message = $account['total_message'];
         #我的门店总余额
         $user->money = $account->money;
+        //累计消费
+        $user->lj = $account->lj;
         //  $user->total_shop_money = $user->money;
         #核销权限
         $user->verifier_status = ShopVerifier::isVerifier($user->mobile);

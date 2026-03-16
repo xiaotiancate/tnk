@@ -35,9 +35,9 @@ class Pay extends XiluxcApi
             $this->error('参数错误');
         }
         $config = Config::getMyConfig('wxpayment');
-        if (!$config || !$config['mch_id'] || !$config['mch_key']) {
-            $this->error("请正确配置微信商户信息");
-        }
+//        if (!$config || !$config['mch_id'] || !$config['mch_key']) {
+//            $this->error("请正确配置微信商户信息");
+//        }
         $type = array_get($params, 'type');
         switch ($type) {
             case 'vip':
@@ -141,6 +141,7 @@ class Pay extends XiluxcApi
                 $this->error($e->getMessage());
             }
             Db::commit();
+//            dump(11111);die();
             $this->success("支付成功",$orderinfo);
         }
         else if($pay_type == 3){
@@ -188,12 +189,14 @@ class Pay extends XiluxcApi
      */
     public function notify()
     {
+
         $payment = new Payment($this->platform);
         $table = input('table','order');
         $response = $payment->getPayment()->handlePaidNotify(function ($message, $fail) use($table){
             // 你的逻辑
             $order_no = $message['out_trade_no'];
             $trade_no = $message['transaction_id'];
+//            dump($table);die();
             Db::startTrans();
             switch($table){
                 case 'recharge':
