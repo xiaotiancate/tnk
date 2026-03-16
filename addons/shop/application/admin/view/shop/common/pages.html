@@ -1,0 +1,99 @@
+<div class="panel panel-default panel-intro">
+
+    <div class="panel-heading">
+        {:build_heading(null,FALSE)}
+        <ul class="nav nav-tabs" data-field="flag">
+            <li class="active"><a href="#t-all" data-value="" data-toggle="tab">{:__('All')}</a></li>
+            <li class=""><a href="#t-all" data-value="category" data-toggle="tab">分类</a></li>
+            <li class=""><a href="#t-all" data-value="goods" data-toggle="tab">商品</a></li>
+            <li class=""><a href="#t-all" data-value="page" data-toggle="tab">单页</a></li>
+            <li class=""><a href="#t-all" data-value="my" data-toggle="tab">我的</a></li>
+        </ul>
+    </div>
+
+
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+
+                    <div id="toolbar" class="toolbar">
+                        <a href="javascript:;" class="btn btn-primary btn-refresh" title="{:__('Refresh')}"><i class="fa fa-refresh"></i> </a>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover table-nowrap" id="table">
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--@formatter:off-->
+<script>
+    require.callback = function () {
+        define('backend/shop/ajax', ['jquery', 'bootstrap', 'backend', 'table', 'template'], function ($, undefined, Backend, Table, Template) {
+            var Controller = {
+                get_page_list: function () {
+                    Table.api.init({
+                        extend: {
+                            index_url: 'shop/ajax/get_page_list' + location.search,
+                            table: '',
+                        }
+                    });
+                    var table = $("#table");
+
+                    // 初始化表格
+                    table.bootstrapTable({
+                        url: $.fn.bootstrapTable.defaults.extend.index_url,
+                        toolbar: ".toolbar", //工具栏
+                        search: true, //是否启用快速搜索
+                        cache: false,
+                        pageSize: 10,
+                        pagination: true,
+                        pageList: [10, 15, 20, 25, 50, 'All'],
+                        columns: [{
+                            field: 'path',
+                            title: '路径',
+                            width:'50%',
+                            formatter:function (value, row, index) {
+                                return '<input type="text" class="form-control" value="' + value + '" />';
+                            }
+                        }, {
+                            field: 'name',
+                            title: '名称',
+                            width:'35%',
+                            align:'center',
+                            valign: 'middle',
+                        },  {
+                            field: 'flag',
+                            title: '标志',
+                            visible:false,
+                            formatter:Table.api.formatter.label,
+                            searchList: {'all':'全部', 'category':'分类', 'goods':'商品', 'page':'单页', 'my':'我的'},
+                        }, {
+                            field: 'operate',
+                            title: '操作',
+                            align:'center',
+                            width:'15%',
+                            valign: 'middle',
+                            formatter:function (value, row, index) {
+                                return '<a href="javascript:" class="btn btn-success btn-xs btn-selectit">选择</a>';
+                            }
+                        }],
+                    });
+
+                    // 为表格绑定事件
+                    Table.api.bindevent(table);
+
+                    $(document).on("click", ".btn-selectit", function () {
+                        Fast.api.close($(this).parent().prev().prev().find("input").val());
+                        return false;
+                    });
+
+                }
+            };
+            return Controller;
+        });
+    }
+</script>
+<!--@formatter:on-->

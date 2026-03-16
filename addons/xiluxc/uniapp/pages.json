@@ -1,0 +1,387 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/stores_list/stores_list",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/stores/stores",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/stores_info/stores_info",
+			"style": {
+				"navigationBarTitleText": "门店详情"
+			}
+		},
+		{
+			"path": "pages/pay_order/pay_order",
+			"style": {
+				"navigationBarTitleText": "购买"
+			}
+		},
+		{
+			"path": "pages/car_knowledge/car_knowledge",
+			"style": {
+				"navigationBarTitleText": "养车知识",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/car_knowledge_info/car_knowledge_info",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
+			"path": "pages/message_list/message_list",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/platform_bulletin/platform_bulletin",
+			"style": {
+				"navigationBarTitleText": "平台公告"
+			}
+		},
+		{
+			"path": "pages/platform_bulletin_info/platform_bulletin_info",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
+			"path": "pages/order_list/order_list",
+			"style": {
+				"navigationBarTitleText": "订单"
+			}
+		},
+		{
+			"path": "pages/order_size/order_size",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/rate/rate",
+			"style": {
+				"navigationBarTitleText": "立即评价"
+			}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/vip_member/vip_member",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/vip_agreement/vip_agreement",
+			"style": {
+				
+			}
+		},
+		{
+			"path": "pages/add_car/add_car",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/car_list/car_list",
+			"style": {
+				"navigationBarTitleText": "我的爱车"
+			}
+		},
+		{
+			"path": "pages/my_coupons_list/my_coupons_list",
+			"style": {
+				"navigationBarTitleText": "我的优惠券"
+			}
+		},
+		{
+			"path": "pages/my_combo_list/my_combo_list",
+			"style": {
+				"navigationBarTitleText": "我的套餐"
+			}
+		},
+		{
+			"path": "pages/combo_stores_list/combo_stores_list",
+			"style": {
+				"navigationBarTitleText": "套餐门店"
+			}
+		},
+		{
+			"path": "pages/combo_detail/combo_detail",
+			"style": {
+				"navigationBarTitleText": "套餐详情"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/service_detail/service_detail",
+			"style": {
+				"navigationBarTitleText": "服务详情"
+			}
+		},
+		{
+			"path": "pages/package_detail/package_detail",
+			"style": {
+				"navigationBarTitleText": "套餐详情"
+			}
+		},
+		{
+			"path": "pages/vip_stores_list/vip_stores_list",
+			"style": {
+				"navigationBarTitleText": "可用门店"
+			}
+		},
+		{
+			"path": "pages/switch_my_car/switch_my_car",
+			"style": {
+				"navigationBarTitleText": "我的爱车"
+			}
+		},
+		{
+			"path": "pages/my_commissions/my_commissions",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/request_withdrawal/request_withdrawal",
+			"style": {
+				"navigationBarTitleText": "申请提现"
+			}
+		},
+		{
+			"path": "pages/my_balance/my_balance",
+			"style": {
+				"navigationBarTitleText": "我的余额"
+			}
+		},
+		{
+			"path": "pages/recharge/recharge",
+			"style": {
+				"navigationBarTitleText": "我的余额"
+			}
+		},
+		{
+			"path": "pages/balance_details/balance_details",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my_point/my_point",
+			"style": {
+				"navigationBarTitleText": "我的积分"
+			}
+		},
+		{
+			"path": "pages/suggestions/suggestions",
+			"style": {
+				"navigationBarTitleText": "投诉建议"
+			}
+		},
+		{
+			"path": "pages/write_complaint/write_complaint",
+			"style": {
+				"navigationBarTitleText": "填写我的投诉"
+			}
+		},
+		{
+			"path": "pages/my_team/my_team",
+			"style": {
+				"navigationBarTitleText": "我的团队"
+			}
+		},
+		{
+			"path": "pages/invite/invite",
+			"style": {
+				"navigationBarTitleText": "分享拉新"
+			}
+		},
+		{
+			"path": "pages/brand_entry/brand_entry",
+			"style": {
+				"navigationBarTitleText": "品牌入驻"
+			}
+		},
+		{
+			"path": "pages/business_entry/business_entry",
+			"style": {
+				"navigationBarTitleText": "商家入驻"
+			}
+		},
+		{
+			"path": "pages/rich_mp/rich_mp",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/to_offset/to_offset",
+			"style": {
+				"navigationBarTitleText": "核销"
+			}
+		},
+		{
+			"path": "pages/to_offset2/to_offset2",
+			"style": {
+				"navigationBarTitleText": "套餐核销"
+			}
+		},
+		{
+			"path": "pages/offset_list/offset_list",
+			"style": {
+				"navigationBarTitleText": "核销记录"
+			}
+		},
+		{
+			"path": "pages/offset_info/offset_info",
+			"style": {
+				"navigationBarTitleText": "核销详情"
+			}
+		},
+		{
+			"path" : "pages/base_info/base_info",
+			"style" : 
+			{
+				"navigationBarTitleText" : "基本信息"
+			}
+		},
+		{
+			"path" : "pages/purchased_order/purchased_order",
+			"style" : 
+			{
+				"navigationBarTitleText" : "购买"
+			}
+		},
+		{
+			"path" : "pages/car_picker_1st/car_picker_1st",
+			"style" : 
+			{
+				"navigationBarTitleText" : "车辆品牌选择"
+			}
+		},
+		{
+			"path" : "pages/car_picker_2nd/car_picker_2nd",
+			"style" : 
+			{
+				"navigationBarTitleText" : "车辆品牌选择"
+			}
+		},
+		{
+			"path" : "pages/car_picker_3rd/car_picker_3rd",
+			"style" : 
+			{
+				"navigationBarTitleText" : "车辆品牌选择"
+			}
+		},
+		{
+			"path" : "pages/rate_list/rate_list",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的评价"
+			}
+		},
+		{
+			"path" : "pages/appraise/appraise",
+			"style" : 
+			{
+				"navigationBarTitleText" : "评价"
+			}
+		},
+		{
+			"path" : "pages/my_vip/my_vip",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/map/map",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"tabBar": {
+		"backgroundColor": "#FFFFFF",
+		"color": "#AAAAAA",
+		"selectedColor": "#FE4B01",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/icon/icon_foot1_uc.png",
+				"selectedIconPath": "static/icon/icon_foot1_sc.png"
+			},
+			{
+				"pagePath": "pages/stores/stores",
+				"text": "门店",
+				"iconPath": "static/icon/icon_foot2_uc.png",
+				"selectedIconPath": "static/icon/icon_foot2_sc.png"
+			},
+			{
+				"pagePath": "pages/car_knowledge/car_knowledge",
+				"text": "知识",
+				"iconPath": "static/icon/icon_foot3_uc.png",
+				"selectedIconPath": "static/icon/icon_foot3_sc.png"
+			},
+			{
+				"pagePath": "pages/message_list/message_list",
+				"text": "消息",
+				"iconPath": "static/icon/icon_foot4_uc.png",
+				"selectedIconPath": "static/icon/icon_foot4_sc.png"
+			},
+			{
+				"pagePath": "pages/profile/profile",
+				"text": "我的",
+				"iconPath": "static/icon/icon_foot5_uc.png",
+				"selectedIconPath": "static/icon/icon_foot5_sc.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "西陆洗车",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF"
+	},
+	"uniIdRouter": {}
+}
